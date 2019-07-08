@@ -1,0 +1,13 @@
+server:
+  name: deposition-backend
+  port: 80
+
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+
+spring:
+  profiles:
+    active: dev
