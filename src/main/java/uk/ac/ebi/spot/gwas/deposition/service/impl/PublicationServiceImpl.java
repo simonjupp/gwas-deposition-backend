@@ -9,6 +9,7 @@ import uk.ac.ebi.spot.gwas.deposition.exception.EntityNotFoundException;
 import uk.ac.ebi.spot.gwas.deposition.repository.PublicationRepository;
 import uk.ac.ebi.spot.gwas.deposition.service.PublicationService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,13 @@ public class PublicationServiceImpl implements PublicationService {
 
         log.info("Returning publication: {}", optionalPublication.get().getPmid());
         return optionalPublication.get();
+    }
+
+    @Override
+    public List<Publication> retrievePublications(String pmid) {
+        log.info("Retrieving all publications.");
+        List<Publication> publications = publicationRepository.findAll();
+        log.info("Found {} publications.", publications.size());
+        return publications;
     }
 }
