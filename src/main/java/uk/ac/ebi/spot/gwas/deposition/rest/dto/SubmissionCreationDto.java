@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -14,7 +14,7 @@ public final class SubmissionCreationDto implements Serializable {
 
     private static final long serialVersionUID = 3158029215487618051L;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("publication")
     private final PublicationDto publication;
 

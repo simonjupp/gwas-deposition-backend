@@ -3,6 +3,7 @@ package uk.ac.ebi.spot.gwas.deposition.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import uk.ac.ebi.spot.gwas.deposition.constants.SubmissionStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,9 @@ public class Submission {
 
     private Provenance created;
 
-    public Submission(String publicationId, String status, Provenance created) {
+    public Submission(String publicationId, Provenance created) {
         this.publicationId = publicationId;
-        this.status = status;
+        this.status = SubmissionStatus.STARTED.name();
         this.created = created;
 
         this.studies = new ArrayList<>();
@@ -84,5 +85,37 @@ public class Submission {
 
     public void setStudies(List<String> studies) {
         this.studies = studies;
+    }
+
+    public List<String> getAssociations() {
+        return associations;
+    }
+
+    public void setAssociations(List<String> associations) {
+        this.associations = associations;
+    }
+
+    public List<String> getSamples() {
+        return samples;
+    }
+
+    public void setSamples(List<String> samples) {
+        this.samples = samples;
+    }
+
+    public List<String> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<String> notes) {
+        this.notes = notes;
+    }
+
+    public List<String> getFileUploads() {
+        return fileUploads;
+    }
+
+    public void setFileUploads(List<String> fileUploads) {
+        this.fileUploads = fileUploads;
     }
 }

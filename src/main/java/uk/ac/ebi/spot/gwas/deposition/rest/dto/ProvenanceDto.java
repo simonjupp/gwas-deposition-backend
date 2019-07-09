@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 import uk.ac.ebi.spot.gwas.deposition.util.JsonJodaDateTimeDeserializer;
 import uk.ac.ebi.spot.gwas.deposition.util.JsonJodaDateTimeSerializer;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -19,12 +19,12 @@ public final class ProvenanceDto implements Serializable {
 
     private static final long serialVersionUID = 7978459693400159232L;
 
-    @NotBlank
+    @NotNull
     @JsonSerialize(using = JsonJodaDateTimeSerializer.class)
     @JsonProperty("timestamp")
     private final DateTime timestamp;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("user")
     private final UserDto user;
 

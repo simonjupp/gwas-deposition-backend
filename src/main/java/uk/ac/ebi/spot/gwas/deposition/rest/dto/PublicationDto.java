@@ -10,7 +10,8 @@ import org.joda.time.DateTime;
 import uk.ac.ebi.spot.gwas.deposition.util.JsonJodaDateTimeDeserializer;
 import uk.ac.ebi.spot.gwas.deposition.util.JsonJodaDateTimeSerializer;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,32 +21,32 @@ public final class PublicationDto implements Serializable {
 
     private static final long serialVersionUID = 4614819124284486530L;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("pmid")
     private final String pmid;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("journal")
     private final String journal;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("title")
     private final String title;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("authors")
     private final List<String> authors;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("publicationDate")
     @JsonSerialize(using = JsonJodaDateTimeSerializer.class)
     private final DateTime publicationDate;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("correspondingAuthor")
     private final CorrespondingAuthorDto correspondingAuthor;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("status")
     private final String status;
 

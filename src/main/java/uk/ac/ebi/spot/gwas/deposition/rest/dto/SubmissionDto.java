@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public final class SubmissionDto implements Serializable {
     @JsonProperty("id")
     private final String id;
 
-    @NotEmpty
+    @NotNull
     @JsonProperty("publication")
     private final PublicationDto publication;
 
@@ -42,7 +43,7 @@ public final class SubmissionDto implements Serializable {
     @JsonProperty("notes")
     private final List<NoteDto> notes;
 
-    @NotEmpty
+    @NotNull
     @JsonProperty("created")
     private final ProvenanceDto created;
 

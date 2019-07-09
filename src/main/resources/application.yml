@@ -6,7 +6,11 @@ logging:
   level:
     org:
       springframework:
-        web: INFO
+        web: DEBUG
+
+gwas-deposition:
+  auth:
+    enabled: false
 
 spring:
   profiles:
