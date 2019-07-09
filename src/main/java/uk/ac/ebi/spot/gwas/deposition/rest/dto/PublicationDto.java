@@ -45,19 +45,25 @@ public final class PublicationDto implements Serializable {
     @JsonProperty("correspondingAuthor")
     private final CorrespondingAuthorDto correspondingAuthor;
 
+    @NotBlank
+    @JsonProperty("status")
+    private final String status;
+
     @JsonCreator
     public PublicationDto(@JsonProperty("pmid") String pmid,
                           @JsonProperty("title") String title,
                           @JsonProperty("journal") String journal,
                           @JsonProperty("authors") List<String> authors,
                           @JsonProperty("publicationDate") @JsonDeserialize(using = JsonJodaDateTimeDeserializer.class) DateTime publicationDate,
-                          @JsonProperty("correspondingAuthor") CorrespondingAuthorDto correspondingAuthor) {
+                          @JsonProperty("correspondingAuthor") CorrespondingAuthorDto correspondingAuthor,
+                          @JsonProperty("status") String status) {
         this.pmid = pmid;
         this.title = title;
         this.journal = journal;
         this.authors = authors;
         this.publicationDate = publicationDate;
         this.correspondingAuthor = correspondingAuthor;
+        this.status = status;
     }
 
     public String getPmid() {
@@ -82,5 +88,9 @@ public final class PublicationDto implements Serializable {
 
     public CorrespondingAuthorDto getCorrespondingAuthor() {
         return correspondingAuthor;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
