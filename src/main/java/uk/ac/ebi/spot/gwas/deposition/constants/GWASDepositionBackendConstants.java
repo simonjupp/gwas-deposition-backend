@@ -14,4 +14,6 @@ public class GWASDepositionBackendConstants {
 
     public static final String LOG_FILE_NAME = "LOG_FILE_NAME";
 
+    public static final String PARAM_PMID = "pmid";
+
 }
