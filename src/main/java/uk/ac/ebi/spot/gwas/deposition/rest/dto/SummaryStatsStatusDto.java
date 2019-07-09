@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -14,11 +14,11 @@ public final class SummaryStatsStatusDto implements Serializable {
 
     private static final long serialVersionUID = -2657456402979135393L;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("filePath")
     private final String filePath;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("status")
     private final String status;
 

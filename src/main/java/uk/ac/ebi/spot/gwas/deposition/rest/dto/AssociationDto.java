@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -14,18 +15,18 @@ public final class AssociationDto implements Serializable {
 
     private static final long serialVersionUID = -8090471838029326631L;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("study_tag")
     private final String studyTag;
 
     @JsonProperty("haplotype_id")
     private final String haplotypeId;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("variant_id")
     private final String variantId;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("pvalue")
     private final Double pvalue;
 
@@ -35,14 +36,14 @@ public final class AssociationDto implements Serializable {
     @JsonProperty("proxy_variant")
     private final String proxyVariant;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("effect_allele")
     private final String effectAllele;
 
     @JsonProperty("other_allele")
     private final String otherAllele;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("effect_allele_frequency")
     private final Double effectAlleleFrequency;
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -14,11 +14,11 @@ public final class UserDto implements Serializable {
 
     private static final long serialVersionUID = 4908356522704320852L;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("name")
     private final String name;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("email")
     private final String email;
 

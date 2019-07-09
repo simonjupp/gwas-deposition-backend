@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -14,15 +15,15 @@ public final class SampleDto implements Serializable {
 
     private static final long serialVersionUID = -1115661685340650284L;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("study_tag")
     private final String studyTag;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("stage")
     private final String stage;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("size")
     private final Integer size;
 
@@ -35,7 +36,7 @@ public final class SampleDto implements Serializable {
     @JsonProperty("sample_description")
     private final String sampleDescription;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("ancestry_category")
     private final String ancestryCategory;
 
@@ -45,7 +46,7 @@ public final class SampleDto implements Serializable {
     @JsonProperty("ancestry_description")
     private final String ancestryDescription;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("country_recruitement")
     private final String countryRecruitement;
 

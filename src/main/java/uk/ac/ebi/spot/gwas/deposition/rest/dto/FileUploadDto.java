@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,19 +16,19 @@ public final class FileUploadDto implements Serializable {
 
     private static final long serialVersionUID = -446148751976288089L;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("id")
     private final String id;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("fileName")
     private final String fileName;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("fileSize")
     private final Integer fileSize;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("status")
     private final String status;
 

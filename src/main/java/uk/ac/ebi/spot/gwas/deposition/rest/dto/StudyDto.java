@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @EqualsAndHashCode
@@ -14,11 +15,11 @@ public final class StudyDto implements Serializable {
 
     private static final long serialVersionUID = -2822216095301860842L;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("study_tag")
     private final String studyTag;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("genotyping_technology")
     private final String genotypingTechnology;
 
@@ -28,11 +29,11 @@ public final class StudyDto implements Serializable {
     @JsonProperty("array_information")
     private final String arrayInformation;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("imputation")
     private final Boolean imputation;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("variant_count")
     private final Integer variantCount;
 
@@ -42,7 +43,7 @@ public final class StudyDto implements Serializable {
     @JsonProperty("study_description")
     private final String studyDescription;
 
-    @NotBlank
+    @NotEmpty
     @JsonProperty("trait")
     private final String trait;
 
