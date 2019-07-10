@@ -23,6 +23,8 @@ import uk.ac.ebi.spot.gwas.deposition.service.FileUploadsService;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -87,6 +89,18 @@ public class FileUploadsServiceImpl implements FileUploadsService {
                 attachmentByteArray.length);
 
         return attachmentByteArray;
+    }
+
+    @Override
+    public List<FileUpload> getFileUploads(List<String> ids) {
+        log.info("Retrieving files: {}", ids);
+        if (ids == null) {
+            return new ArrayList<>();
+        }
+
+        List<FileUpload> fileUploads = fileUploadRepository.findByIdIn(ids);
+        log.info("Found {} files.", fileUploads.size());
+        return fileUploads;
     }
 
     private GridFSFile getGridFsdbFileForFileId(String fileId) {

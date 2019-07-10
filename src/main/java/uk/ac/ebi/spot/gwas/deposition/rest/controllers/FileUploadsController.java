@@ -20,6 +20,8 @@ import uk.ac.ebi.spot.gwas.deposition.service.UserService;
 import uk.ac.ebi.spot.gwas.deposition.util.HeadersUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = GWASDepositionBackendConstants.API_V1 + GWASDepositionBackendConstants.API_SUBMISSIONS)
@@ -40,7 +42,7 @@ public class FileUploadsController {
     private SubmissionService submissionService;
 
     /*
-     * POST /v1/submissions/{submissionId}/
+     * POST /v1/submissions/{submissionId}/uploads
      */
     @PostMapping(
             value = "/{submissionId}" + GWASDepositionBackendConstants.API_UPLOADS,
@@ -61,4 +63,38 @@ public class FileUploadsController {
         return FileUploadDtoAssembler.assemble(fileUpload, null);
     }
 
+    /**
+     * GET /v1/submissions/{submissionId}/uploads/{fileUploadId}
+     */
+    @GetMapping(value = "/{submissionId}" + GWASDepositionBackendConstants.API_UPLOADS + "/{fileUploadId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public FileUploadDto getFileUploadId(@PathVariable String submissionId,
+                                         @PathVariable String fileUploadId, HttpServletRequest request) {
+        User user = userService.findOrCreateUser(jwtService.extractUser(HeadersUtil.extractJWT(request)));
+        log.info("[{}] Request to retrieve file [{}] from submission: {}", user.getName(), fileUploadId, submissionId);
+        Submission submission = submissionService.getSubmission(submissionId);
+        FileUpload fileUpload = fileUploadsService.getFileUpload(fileUploadId);
+        log.info("Returning file [{}] for submission: {}", fileUpload.getFileName(), submission.getId());
+        return FileUploadDtoAssembler.assemble(fileUpload, null);
+    }
+
+    /**
+     * GET /v1/submissions/{submissionId}/uploads
+     */
+    @GetMapping(value = "/{submissionId}" + GWASDepositionBackendConstants.API_UPLOADS,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<FileUploadDto> getFileUploads(@PathVariable String submissionId, HttpServletRequest request) {
+        User user = userService.findOrCreateUser(jwtService.extractUser(HeadersUtil.extractJWT(request)));
+        log.info("[{}] Request to retrieve files from submission: {}", user.getName(), submissionId);
+        Submission submission = submissionService.getSubmission(submissionId);
+        List<FileUpload> fileUploads = fileUploadsService.getFileUploads(submission.getFileUploads());
+        log.info("Returning {} files for submission: {}", fileUploads.size(), submission.getId());
+        List<FileUploadDto> result = new ArrayList<>();
+        for (FileUpload fileUpload : fileUploads) {
+            result.add(FileUploadDtoAssembler.assemble(fileUpload, null));
+        }
+        return result;
+    }
 }
