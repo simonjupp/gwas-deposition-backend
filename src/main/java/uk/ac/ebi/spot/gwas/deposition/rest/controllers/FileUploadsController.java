@@ -3,6 +3,8 @@ package uk.ac.ebi.spot.gwas.deposition.rest.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -96,5 +98,31 @@ public class FileUploadsController {
             result.add(FileUploadDtoAssembler.assemble(fileUpload, null));
         }
         return result;
+    }
+
+    /**
+     * GET /v1/submissions/{submissionId}/uploads/{fileUploadId}/download
+     */
+    @GetMapping(value = "/{submissionId}" + GWASDepositionBackendConstants.API_UPLOADS +
+            "/{fileUploadId}" + GWASDepositionBackendConstants.API_DOWNLOAD,
+            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public HttpEntity<byte[]> downloadFile(@PathVariable String submissionId,
+                                           @PathVariable String fileUploadId,
+                                           HttpServletRequest request) {
+        User user = userService.findOrCreateUser(jwtService.extractUser(HeadersUtil.extractJWT(request)));
+        log.info("[{}] Request to download file [{}] from submission: {}", user.getName(), fileUploadId, submissionId);
+        Submission submission = submissionService.getSubmission(submissionId);
+        FileUpload fileUpload = fileUploadsService.getFileUpload(fileUploadId);
+        byte[] payload = fileUploadsService.retrieveFileContent(fileUpload.getId());
+        log.info("Returning content for file [{}] for submission: {}", fileUpload.getFileName(), submission.getId());
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileUpload.getFileName());
+        responseHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        responseHeaders.add(HttpHeaders.CONTENT_LENGTH, Integer.toString(payload.length));
+        return new HttpEntity<>(payload, responseHeaders);
     }
 }

@@ -1,10 +1,13 @@
 package uk.ac.ebi.spot.gwas.deposition.rest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,6 +23,7 @@ import uk.ac.ebi.spot.gwas.deposition.service.FileUploadsService;
 import uk.ac.ebi.spot.gwas.deposition.service.SubmissionService;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -119,6 +123,33 @@ public class FileUploadsControllerTest extends IntegrationTest {
         List<FileUploadDto> actual = mapper.readValue(response, new TypeReference<List<FileUploadDto>>() {
         });
         assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    public void shouldDownloadFile() throws Exception {
+        SubmissionDto submissionDto = createSubmission(new SubmissionCreationDto(PublicationDtoAssembler.assemble(publication)));
+        FileUploadDto fileUploadDto = createFileUpload(submissionDto.getId());
+
+        String endpoint = GWASDepositionBackendConstants.API_V1 +
+                GWASDepositionBackendConstants.API_SUBMISSIONS +
+                "/" + submissionDto.getId() +
+                GWASDepositionBackendConstants.API_UPLOADS +
+                "/" + fileUploadDto.getId() +
+                GWASDepositionBackendConstants.API_DOWNLOAD;
+
+        MockHttpServletResponse response = mockMvc.perform(get(endpoint)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        byte[] body = response.getContentAsByteArray();
+        assertEquals(fileUploadDto.getFileSize().intValue(), body.length);
+        assertEquals("attachment; filename=" + fileUploadDto.getFileName(),
+                response.getHeader(HttpHeaders.CONTENT_DISPOSITION));
+
+        InputStream fileAsStream = new ClassPathResource("test.pdf").getInputStream();
+        assertTrue(Arrays.equals(IOUtils.toByteArray(fileAsStream), body));
     }
 
     private FileUploadDto createFileUpload(String submissionId) throws Exception {
