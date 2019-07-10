@@ -26,7 +26,7 @@ public final class FileUploadDto implements Serializable {
 
     @NotNull
     @JsonProperty("fileSize")
-    private final Integer fileSize;
+    private final Long fileSize;
 
     @NotEmpty
     @JsonProperty("status")
@@ -39,7 +39,7 @@ public final class FileUploadDto implements Serializable {
     public FileUploadDto(@JsonProperty("id") String id,
                          @JsonProperty("status") String status,
                          @JsonProperty("fileName") String fileName,
-                         @JsonProperty("fileSize") Integer fileSize,
+                         @JsonProperty("fileSize") Long fileSize,
                          @JsonProperty("summaryStatsStatuses") List<SummaryStatsStatusDto> summaryStatsStatuses) {
         this.id = id;
         this.status = status;
@@ -60,7 +60,7 @@ public final class FileUploadDto implements Serializable {
         return fileName;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 

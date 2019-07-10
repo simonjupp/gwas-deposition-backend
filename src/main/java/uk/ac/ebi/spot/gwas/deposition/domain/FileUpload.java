@@ -16,7 +16,7 @@ public class FileUpload {
 
     private String fileName;
 
-    private Integer fileSize;
+    private Long fileSize;
 
     private String status;
 
@@ -26,7 +26,7 @@ public class FileUpload {
 
     }
 
-    public FileUpload(String fileId, String fileName, Integer fileSize, String status) {
+    public FileUpload(String fileId, String fileName, Long fileSize, String status) {
         this.fileId = fileId;
         this.fileName = fileName;
         this.fileSize = fileSize;
@@ -58,11 +58,11 @@ public class FileUpload {
         this.fileName = fileName;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 

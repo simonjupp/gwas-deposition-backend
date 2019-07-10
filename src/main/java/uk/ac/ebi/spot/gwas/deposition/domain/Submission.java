@@ -118,4 +118,8 @@ public class Submission {
     public void setFileUploads(List<String> fileUploads) {
         this.fileUploads = fileUploads;
     }
+
+    public void addFileUpload(String fileUpload) {
+        this.fileUploads.add(fileUpload);
+    }
 }
