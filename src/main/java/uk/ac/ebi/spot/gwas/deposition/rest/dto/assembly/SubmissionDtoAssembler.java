@@ -9,7 +9,7 @@ public class SubmissionDtoAssembler {
 
     public static SubmissionDto assemble(Submission submission,
                                          PublicationDto publication,
-                                         FileUploadDto fileUpload,
+                                         List<FileUploadDto> fileUploads,
                                          List<StudyDto> studies,
                                          List<SampleDto> samples,
                                          List<AssociationDto> associations,
@@ -18,7 +18,7 @@ public class SubmissionDtoAssembler {
         return new SubmissionDto(submission.getId(),
                 publication,
                 submission.getStatus(),
-                fileUpload,
+                fileUploads,
                 studies,
                 samples,
                 associations,

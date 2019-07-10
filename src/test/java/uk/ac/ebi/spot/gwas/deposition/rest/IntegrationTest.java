@@ -100,7 +100,7 @@ public abstract class IntegrationTest {
         assertEquals(user.getName(), actual.getCreated().getUser().getName());
         assertEquals(user.getEmail(), actual.getCreated().getUser().getEmail());
 
-        assertNull(actual.getFile());
+        assertNull(actual.getFiles());
         assertNull(actual.getStudies());
         assertNull(actual.getSamples());
         assertNull(actual.getAssociations());
