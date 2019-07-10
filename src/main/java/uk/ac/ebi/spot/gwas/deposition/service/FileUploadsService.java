@@ -14,4 +14,6 @@ public interface FileUploadsService {
     byte[] retrieveFileContent(String fileUploadId);
 
     List<FileUpload> getFileUploads(List<String> fileUploads);
+
+    void deleteFileUpload(String fileUploadId);
 }

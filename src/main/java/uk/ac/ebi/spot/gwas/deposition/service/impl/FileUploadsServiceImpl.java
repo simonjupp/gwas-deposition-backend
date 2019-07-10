@@ -103,8 +103,27 @@ public class FileUploadsServiceImpl implements FileUploadsService {
         return fileUploads;
     }
 
+    @Override
+    public void deleteFileUpload(String fileUploadId) {
+        log.info("Deleting file upload: {}", fileUploadId);
+        FileUpload fileUpload = getFileUpload(fileUploadId);
+        deleteGridFSFile(fileUpload.getFileId());
+        fileUploadRepository.delete(fileUpload);
+    }
+
+    private void deleteGridFSFile(String fileId) {
+        log.info("Received call to delete GridFSFile with id: {}", fileId);
+        Query query = new Query(Criteria.where("_id").is(fileId));
+        GridFSFile file = gridFsOperations.findOne(query);
+        if (file == null) {
+            log.error("No file found in DB for id: {}", fileId);
+            throw new EntityNotFoundException("No file found in DB for id: " + fileId);
+        }
+        gridFsOperations.delete(query);
+    }
+
     private GridFSFile getGridFsdbFileForFileId(String fileId) {
-        log.info("Received call to get GridFSFile for id {}", fileId);
+        log.info("Received call to get GridFSFile for id: {}", fileId);
         Query query = new Query(Criteria.where("_id").is(fileId));
         GridFSFile file = gridFsOperations.findOne(query);
         if (file == null) {
@@ -115,7 +134,7 @@ public class FileUploadsServiceImpl implements FileUploadsService {
     }
 
     private InputStream getFileDownloadStream(ObjectId objectId) {
-        log.info("Retrieving file for download {}", objectId.toString());
+        log.info("Retrieving file for download: {}", objectId.toString());
         GridFSDownloadStream stream = GridFSBuckets.create(mongoTemplate.getDb())
                 .openDownloadStream(objectId);
         log.info("Retrieved download stream {}", objectId.toString());

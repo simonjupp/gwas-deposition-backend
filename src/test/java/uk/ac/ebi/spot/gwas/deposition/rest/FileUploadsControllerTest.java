@@ -2,6 +2,7 @@ package uk.ac.ebi.spot.gwas.deposition.rest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -125,6 +127,9 @@ public class FileUploadsControllerTest extends IntegrationTest {
         assertTrue(actual.isEmpty());
     }
 
+    /**
+     * GET /v1/submissions/{submissionId}/uploads/{fileUploadId}/download
+     */
     @Test
     public void shouldDownloadFile() throws Exception {
         SubmissionDto submissionDto = createSubmission(new SubmissionCreationDto(PublicationDtoAssembler.assemble(publication)));
@@ -150,6 +155,46 @@ public class FileUploadsControllerTest extends IntegrationTest {
 
         InputStream fileAsStream = new ClassPathResource("test.pdf").getInputStream();
         assertTrue(Arrays.equals(IOUtils.toByteArray(fileAsStream), body));
+    }
+
+
+    /**
+     * DELETE /v1/submissions/{submissionId}/uploads/{fileUploadId}
+     */
+    @Test
+    public void shouldDeleteFileUpload() throws Exception {
+        SubmissionDto submissionDto = createSubmission(new SubmissionCreationDto(PublicationDtoAssembler.assemble(publication)));
+        FileUploadDto fileUploadDto = createFileUpload(submissionDto.getId());
+
+        String endpoint = GWASDepositionBackendConstants.API_V1 +
+                GWASDepositionBackendConstants.API_SUBMISSIONS +
+                "/" + submissionDto.getId() +
+                GWASDepositionBackendConstants.API_UPLOADS +
+                "/" + fileUploadDto.getId();
+
+        mockMvc.perform(delete(endpoint)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        Submission submission = submissionService.getSubmission(submissionDto.getId());
+        assertTrue(submission.getFileUploads().isEmpty());
+    }
+
+    /**
+     * DELETE /v1/submissions/{submissionId}/uploads/{fileUploadId}
+     */
+    @Test
+    public void shouldFailToDeleteFileUpload() throws Exception {
+        SubmissionDto submissionDto = createSubmission(new SubmissionCreationDto(PublicationDtoAssembler.assemble(publication)));
+        String endpoint = GWASDepositionBackendConstants.API_V1 +
+                GWASDepositionBackendConstants.API_SUBMISSIONS +
+                "/" + submissionDto.getId() +
+                GWASDepositionBackendConstants.API_UPLOADS +
+                "/" + RandomStringUtils.randomAlphanumeric(10);
+
+        mockMvc.perform(delete(endpoint)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     private FileUploadDto createFileUpload(String submissionId) throws Exception {

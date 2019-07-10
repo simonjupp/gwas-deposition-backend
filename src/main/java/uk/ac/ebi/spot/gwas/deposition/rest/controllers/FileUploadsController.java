@@ -125,4 +125,20 @@ public class FileUploadsController {
         responseHeaders.add(HttpHeaders.CONTENT_LENGTH, Integer.toString(payload.length));
         return new HttpEntity<>(payload, responseHeaders);
     }
+
+    /**
+     * DELETE /v1/submissions/{submissionId}/uploads/{fileUploadId}
+     */
+    @DeleteMapping(value = "/{submissionId}" + GWASDepositionBackendConstants.API_UPLOADS + "/{fileUploadId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteFileUploadId(@PathVariable String submissionId,
+                                   @PathVariable String fileUploadId, HttpServletRequest request) {
+        User user = userService.findOrCreateUser(jwtService.extractUser(HeadersUtil.extractJWT(request)));
+        log.info("[{}] Request to delete file [{}] from submission: {}", user.getName(), fileUploadId, submissionId);
+        Submission submission = submissionService.getSubmission(submissionId);
+        fileUploadsService.deleteFileUpload(fileUploadId);
+        submission.removeFileUpload(fileUploadId);
+        submissionService.saveSubmission(submission);
+        log.info("File [{}] successfully removed from submission: {}", fileUploadId, submission.getId());
+    }
 }
