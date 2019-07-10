@@ -1,0 +1,24 @@
+# ignore all *.class files in all folders, including build root
+**/*.class
+
+# ignore .git and .cache folders
+.git
+.gitignore
+.cache
+
+# ignore all markdown files
+*.md
+
+target/classes
+target/coverage-reports
+target/generated-sources
+target/generated-test-sources
+target/maven-archiver
+target/maven-status
+target/surefire-reports
+target/test-classes
+
+log/
+src/main
+src/resources
+pom.xml
