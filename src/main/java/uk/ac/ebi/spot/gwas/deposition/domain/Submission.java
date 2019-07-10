@@ -122,4 +122,10 @@ public class Submission {
     public void addFileUpload(String fileUpload) {
         this.fileUploads.add(fileUpload);
     }
+
+    public void removeFileUpload(String fileUploadId) {
+        if (fileUploads.contains(fileUploadId)) {
+            this.fileUploads.remove(fileUploadId);
+        }
+    }
 }
