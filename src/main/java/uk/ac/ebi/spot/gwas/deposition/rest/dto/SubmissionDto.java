@@ -28,8 +28,8 @@ public final class SubmissionDto implements Serializable {
     @JsonProperty("status")
     private final String status;
 
-    @JsonProperty("file")
-    private final FileUploadDto file;
+    @JsonProperty("files")
+    private final List<FileUploadDto> files;
 
     @JsonProperty("studies")
     private final List<StudyDto> studies;
@@ -51,7 +51,7 @@ public final class SubmissionDto implements Serializable {
     public SubmissionDto(@JsonProperty("id") String id,
                          @JsonProperty("publication") PublicationDto publication,
                          @JsonProperty("status") String status,
-                         @JsonProperty("file") FileUploadDto file,
+                         @JsonProperty("files") List<FileUploadDto> files,
                          @JsonProperty("studies") List<StudyDto> studies,
                          @JsonProperty("samples") List<SampleDto> samples,
                          @JsonProperty("associations") List<AssociationDto> associations,
@@ -60,7 +60,7 @@ public final class SubmissionDto implements Serializable {
         this.id = id;
         this.publication = publication;
         this.status = status;
-        this.file = file;
+        this.files = files;
         this.studies = studies;
         this.samples = samples;
         this.associations = associations;
@@ -80,8 +80,8 @@ public final class SubmissionDto implements Serializable {
         return status;
     }
 
-    public FileUploadDto getFile() {
-        return file;
+    public List<FileUploadDto> getFiles() {
+        return files;
     }
 
     public List<StudyDto> getStudies() {

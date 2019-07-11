@@ -35,6 +35,9 @@ public class Submission {
 
     private Provenance created;
 
+    @Indexed
+    private boolean archived;
+
     public Submission(String publicationId, Provenance created) {
         this.publicationId = publicationId;
         this.status = SubmissionStatus.STARTED.name();
@@ -45,6 +48,11 @@ public class Submission {
         this.notes = new ArrayList<>();
         this.samples = new ArrayList<>();
         this.fileUploads = new ArrayList<>();
+        this.archived = false;
+    }
+
+    public Submission() {
+
     }
 
     public String getId() {
@@ -127,5 +135,13 @@ public class Submission {
         if (fileUploads.contains(fileUploadId)) {
             this.fileUploads.remove(fileUploadId);
         }
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }
