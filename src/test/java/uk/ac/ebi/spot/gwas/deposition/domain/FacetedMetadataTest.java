@@ -10,7 +10,7 @@ public class FacetedMetadataTest {
     public void equalsContract() {
         EqualsVerifier.forClass(FacetedMetadata.class)
                 .suppress(Warning.NONFINAL_FIELDS)
-                .suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT)
+                .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }
 

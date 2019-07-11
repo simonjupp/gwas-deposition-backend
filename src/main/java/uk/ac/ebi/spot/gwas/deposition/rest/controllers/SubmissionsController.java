@@ -106,6 +106,9 @@ public class SubmissionsController {
         return submissionAssemblyService.assemble(submission);
     }
 
+    /**
+     * GET /v1/submissions
+     */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public SubmissionsResultDto getSubmissions(HttpServletRequest request,

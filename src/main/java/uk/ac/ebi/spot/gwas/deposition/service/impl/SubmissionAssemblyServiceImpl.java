@@ -60,19 +60,19 @@ public class SubmissionAssemblyServiceImpl implements SubmissionAssemblyService 
 
         List<SampleDto> sampleDtos = null;
         if (submission.getSamples() != null) {
-            List<Sample> samples = sampleRepository.findByIdIn(submission.getStudies());
+            List<Sample> samples = sampleRepository.findByIdIn(submission.getSamples());
             sampleDtos = samples.stream().map(SampleDtoAssembler::assemble).collect(Collectors.toList());
         }
 
         List<AssociationDto> associationDtos = null;
         if (submission.getAssociations() != null) {
-            List<Association> associations = associationRepository.findByIdIn(submission.getStudies());
+            List<Association> associations = associationRepository.findByIdIn(submission.getAssociations());
             associationDtos = associations.stream().map(AssociationDtoAssembler::assemble).collect(Collectors.toList());
         }
 
         List<NoteDto> noteDtos = null;
         if (submission.getNotes() != null) {
-            List<Note> notes = noteRepository.findByIdIn(submission.getStudies());
+            List<Note> notes = noteRepository.findByIdIn(submission.getNotes());
             noteDtos = notes.stream().map(NoteDtoAssembler::assemble).collect(Collectors.toList());
         }
 
