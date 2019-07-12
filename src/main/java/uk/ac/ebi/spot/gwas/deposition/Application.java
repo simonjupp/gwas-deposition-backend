@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import uk.ac.ebi.spot.gwas.deposition.config.SystemConfigProperties;
 import uk.ac.ebi.spot.gwas.deposition.constants.GWASDepositionBackendConstants;
@@ -16,6 +17,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @SpringBootApplication(scanBasePackages = "uk.ac.ebi.spot.gwas.deposition")
+@EnableScheduling
 public class Application implements WebMvcConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
