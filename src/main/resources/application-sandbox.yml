@@ -1,2 +1,7 @@
 server:
-  port: 8443
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: 10.42.5.8:27017

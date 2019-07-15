@@ -1,6 +1,7 @@
 package uk.ac.ebi.spot.gwas.deposition.config;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.ServerAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -50,4 +51,31 @@ public class MongoConfig {
         }
     }
 
+    @Configuration
+    @EnableMongoRepositories(basePackages = {"uk.ac.ebi.spot.gwas.deposition.repository"})
+    @EnableTransactionManagement
+    @Profile({"sandbox"})
+    public static class MongoConfigSandbox extends AbstractMongoConfiguration {
+
+        @Autowired
+        private SystemConfigProperties systemConfigProperties;
+
+        @Override
+        protected String getDatabaseName() {
+            String serviceName = systemConfigProperties.getServerName();
+            String environmentName = systemConfigProperties.getActiveSpringProfile();
+            return serviceName + "-" + environmentName;
+        }
+
+        @Bean
+        public GridFsTemplate gridFsTemplate() throws Exception {
+            return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter());
+        }
+
+        @Override
+        public MongoClient mongoClient() {
+            String mongoUri = systemConfigProperties.getMongoUri();
+            return new MongoClient(new MongoClientURI("mongodb://" + mongoUri));
+        }
+    }
 }

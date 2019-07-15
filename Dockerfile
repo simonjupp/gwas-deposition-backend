@@ -7,8 +7,8 @@ RUN if [ ! -d /var/log/gwas/ ];then mkdir /var/log/gwas/;fi
 RUN chown -R gwas-deposition-backend:gwas-deposition-backend /var/log/gwas
 
 # Move project artifact
-ADD target/gwas-deposition-backend-*.jar /home/gwas-deposition-backend/
+ADD target/deposition-app-backend-*.jar /home/gwas-deposition-backend/
 USER gwas-deposition-backend
 
 # Launch application server
-ENTRYPOINT exec $JAVA_HOME/bin/java $XMX $XMS -jar -Dspring.profiles.active=$ENVIRONMENT /home/gwas-deposition-backend/gwas-deposition-backend-*.jar --db.user="$DB_USER" --db.password="$DB_PASSWORD"
+ENTRYPOINT exec $JAVA_HOME/bin/java $XMX $XMS -jar -Dspring.profiles.active=$ENVIRONMENT /home/gwas-deposition-backend/deposition-app-backend-*.jar
