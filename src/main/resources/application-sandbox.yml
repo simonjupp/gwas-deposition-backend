@@ -4,4 +4,4 @@ server:
 spring:
   data:
     mongodb:
-      uri: 10.42.5.8:27017
+      uri: mongo-0.mongo.default.svc.cluster.local,mongo-1.mongo.default.svc.cluster.local,mongo-2.mongo.default.svc.cluster.local:27017
