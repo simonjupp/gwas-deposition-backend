@@ -10,7 +10,7 @@ public class PublicationDtoAssembler {
         return new PublicationDto(publication.getPmid(),
                 publication.getTitle(),
                 publication.getJournal(),
-                publication.getAuthors(),
+                publication.getFirstAuthor(),
                 publication.getPublicationDate(),
                 new CorrespondingAuthorDto(publication.getCorrespondingAuthor().getAuthorName(),
                         publication.getCorrespondingAuthor().getEmail()),

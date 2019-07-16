@@ -5,8 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Document(collection = "publications")
 public class Publication {
 
@@ -22,7 +20,7 @@ public class Publication {
 
     private String title;
 
-    private List<String> authors;
+    private String firstAuthor;
 
     private DateTime publicationDate;
 
@@ -32,13 +30,13 @@ public class Publication {
 
     }
 
-    public Publication(String pmid, String journal, String title, List<String> authors,
+    public Publication(String pmid, String journal, String title, String firstAuthor,
                        DateTime publicationDate, CorrespondingAuthor correspondingAuthor,
                        String status) {
         this.pmid = pmid;
         this.journal = journal;
         this.title = title;
-        this.authors = authors;
+        this.firstAuthor = firstAuthor;
         this.publicationDate = publicationDate;
         this.correspondingAuthor = correspondingAuthor;
         this.status = status;
@@ -76,12 +74,12 @@ public class Publication {
         this.title = title;
     }
 
-    public List<String> getAuthors() {
-        return authors;
+    public String getFirstAuthor() {
+        return firstAuthor;
     }
 
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
+    public void setFirstAuthor(String firstAuthor) {
+        this.firstAuthor = firstAuthor;
     }
 
     public DateTime getPublicationDate() {
