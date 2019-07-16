@@ -13,7 +13,6 @@ import uk.ac.ebi.spot.gwas.deposition.util.JsonJodaDateTimeSerializer;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -34,8 +33,8 @@ public final class PublicationDto implements Serializable {
     private final String title;
 
     @NotEmpty
-    @JsonProperty("authors")
-    private final List<String> authors;
+    @JsonProperty("firstAuthor")
+    private final String firstAuthor;
 
     @NotNull
     @JsonProperty("publicationDate")
@@ -54,14 +53,14 @@ public final class PublicationDto implements Serializable {
     public PublicationDto(@JsonProperty("pmid") String pmid,
                           @JsonProperty("title") String title,
                           @JsonProperty("journal") String journal,
-                          @JsonProperty("authors") List<String> authors,
+                          @JsonProperty("firstAuthor") String firstAuthor,
                           @JsonProperty("publicationDate") @JsonDeserialize(using = JsonJodaDateTimeDeserializer.class) DateTime publicationDate,
                           @JsonProperty("correspondingAuthor") CorrespondingAuthorDto correspondingAuthor,
                           @JsonProperty("status") String status) {
         this.pmid = pmid;
         this.title = title;
         this.journal = journal;
-        this.authors = authors;
+        this.firstAuthor = firstAuthor;
         this.publicationDate = publicationDate;
         this.correspondingAuthor = correspondingAuthor;
         this.status = status;
@@ -79,8 +78,8 @@ public final class PublicationDto implements Serializable {
         return title;
     }
 
-    public List<String> getAuthors() {
-        return authors;
+    public String getFirstAuthor() {
+        return firstAuthor;
     }
 
     public DateTime getPublicationDate() {

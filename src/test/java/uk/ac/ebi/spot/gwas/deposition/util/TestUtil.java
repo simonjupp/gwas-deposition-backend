@@ -28,11 +28,7 @@ public class TestUtil {
         return new Publication(RandomStringUtils.randomAlphanumeric(10),
                 RandomStringUtils.randomAlphanumeric(10),
                 RandomStringUtils.randomAlphanumeric(10),
-                Arrays.asList(new String[]{
-                        RandomStringUtils.randomAlphanumeric(10),
-                        RandomStringUtils.randomAlphanumeric(10),
-                        RandomStringUtils.randomAlphanumeric(10)
-                }),
+                RandomStringUtils.randomAlphanumeric(10),
                 DateTime.now(),
                 new CorrespondingAuthor(RandomStringUtils.randomAlphanumeric(10),
                         RandomStringUtils.randomAlphanumeric(10)),
