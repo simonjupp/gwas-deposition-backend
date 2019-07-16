@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@ConditionalOnProperty(name = "gwas-template-service.callback-schedule.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "gwas-sumstats-service.callback-schedule.enabled", havingValue = "true")
 public class CallbackServiceImpl implements CallbackService {
 
     private static final Logger log = LoggerFactory.getLogger(CallbackService.class);
@@ -34,7 +34,7 @@ public class CallbackServiceImpl implements CallbackService {
     @Autowired
     private SummaryStatsEntryRepository summaryStatsEntryRepository;
 
-    @Scheduled(cron = "${gwas-template-service.callback-schedule.freq}")
+    @Scheduled(cron = "${gwas-sumstats-service.callback-schedule.freq}")
     public void runTask() {
         List<CallbackId> callbackIds = callbackIdRepository.findAll();
         log.info("Running callback check on {} IDs.", callbackIds.size());

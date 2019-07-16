@@ -17,15 +17,15 @@ gwas-sumstats-service:
   url: https://gwas-sumstats-service
   endpoints:
     sum-stats: /v1/sum-stats
+  callback-schedule:
+    enabled: false
+    freq: 0 */1 * * * ?
 
 gwas-template-service:
   enabled: false
   url: https://gwas-template-service
   endpoints:
     template-schema: /v1/template-schema
-  callback-schedule:
-    enabled: false
-    freq: 0 */1 * * * ?
 
 spring:
   profiles:

@@ -11,6 +11,7 @@ import uk.ac.ebi.spot.gwas.deposition.rest.dto.summarystats.SummaryStatsRequestE
 import uk.ac.ebi.spot.gwas.deposition.rest.dto.summarystats.SummaryStatsResponseDto;
 import uk.ac.ebi.spot.gwas.deposition.rest.dto.summarystats.SummaryStatsStatusDto;
 import uk.ac.ebi.spot.gwas.deposition.rest.dto.templateschema.SummaryStatsSchemaDto;
+import uk.ac.ebi.spot.gwas.deposition.rest.dto.templateschema.TemplateColumnDto;
 import uk.ac.ebi.spot.gwas.deposition.rest.dto.templateschema.TemplateSchemaDto;
 import uk.ac.ebi.spot.gwas.deposition.rest.dto.templateschema.TemplateSheetDto;
 
@@ -51,19 +52,21 @@ public class TestUtil {
     public static TemplateSheetDto templateSheetDto(boolean withSS) {
         return new TemplateSheetDto(RandomStringUtils.randomAlphanumeric(10),
                 RandomStringUtils.randomAlphanumeric(10),
-                RandomStringUtils.randomAlphanumeric(10),
-                RandomStringUtils.randomAlphanumeric(10),
-                RandomStringUtils.randomAlphanumeric(10),
-                true,
-                RandomStringUtils.randomAlphanumeric(10),
-                10.0,
-                10.0,
-                Arrays.asList(new String[]{
+                Arrays.asList(new TemplateColumnDto[]{new TemplateColumnDto(
                         RandomStringUtils.randomAlphanumeric(10),
                         RandomStringUtils.randomAlphanumeric(10),
-                        RandomStringUtils.randomAlphanumeric(10)
-                }),
-                withSS ? summaryStatsSchemaDto() : null);
+                        RandomStringUtils.randomAlphanumeric(10),
+                        true,
+                        RandomStringUtils.randomAlphanumeric(10),
+                        10.0,
+                        10.0,
+                        Arrays.asList(new String[]{
+                                RandomStringUtils.randomAlphanumeric(10),
+                                RandomStringUtils.randomAlphanumeric(10),
+                                RandomStringUtils.randomAlphanumeric(10)
+                        }),
+                        withSS ? summaryStatsSchemaDto() : null
+                )}));
     }
 
     public static SummaryStatsRequestDto summaryStatsRequestDto() {
