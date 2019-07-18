@@ -6,32 +6,45 @@
 
 ## Publication endpoints
 
-### Search publication by PMID
-`GET /v1/publications?pmid=<pmid>`
- * Param:
-   * `pmid` - the PMID used for searching
+### Retrieve all publications (paginated)
+`GET /v1/publications`
+ * Params:
+   * `page` - start page
+   * `itemsPerPage` - number of items to be received per page
+   * `_sort` - sorting option: `asc` | `desc`
  * Response:
- ```
+```
   {
-    "pmid": "qCwgXmVFfl",
-    "title": "buk0KeIoNz",
-    "journal": "kzJpT9n4oU",
-    "authors": [
-      "NcXZeGpeYL",
-      "kB1lCUxj2h",
-      "ZVG4JvrKkj"
-    ],
-    "publicationDate": "2019-07-11T21:16:28.719+08:00",
-    "correspondingAuthor": {
-      "authorName": "2hScpthcLZ",
-      "email": "bNVlDqVFSP"
+    "metadata": {
+      "page": 1,
+      "itemsPerPage": 10,
+      "totalPages": 1,
+      "totalItems": 1,
+      "filters": {}
     },
-    "status": "ELIGIBLE | CURATION_STARTED"
-  } 
- ```
+    "results": [
+      {
+        "pmid": "qCwgXmVFfl",
+        "title": "buk0KeIoNz",
+        "journal": "kzJpT9n4oU",
+        "authors": [
+          "NcXZeGpeYL",
+          "kB1lCUxj2h",
+          "ZVG4JvrKkj"
+        ],
+        "publicationDate": "2019-07-11T21:16:28.719+08:00",
+        "correspondingAuthor": {
+          "authorName": "2hScpthcLZ",
+          "email": "bNVlDqVFSP"
+        },
+        "status": "ELIGIBLE | CURATION_STARTED"
+      } 
+    ]
+  }
+```
 
-### Retrieve publication by ID
-`GET /v1/publications/{publicationId}`
+### Retrieve publication by ID or PMID
+`GET /v1/publications/{publicationId}?pmid=<true | false>`
  * Response:
  ```
   {
