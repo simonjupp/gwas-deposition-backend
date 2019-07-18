@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.EqualsAndHashCode;
 import org.joda.time.DateTime;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 import uk.ac.ebi.spot.gwas.deposition.util.JsonJodaDateTimeDeserializer;
 import uk.ac.ebi.spot.gwas.deposition.util.JsonJodaDateTimeSerializer;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
 
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Relation(value = "publication", collectionRelation = "publications")
 public class PublicationDto extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = 4614819124284486530L;
