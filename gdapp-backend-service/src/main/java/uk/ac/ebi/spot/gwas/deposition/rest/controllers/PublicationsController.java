@@ -3,9 +3,16 @@ package uk.ac.ebi.spot.gwas.deposition.rest.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.spot.gwas.deposition.constants.GWASDepositionBackendConstants;
 import uk.ac.ebi.spot.gwas.deposition.domain.FacetedSearchPublications;
@@ -38,8 +45,7 @@ public class PublicationsController {
      */
     @GetMapping(value = "/{publicationId}",
             produces = "application/hal+json")
-    @ResponseStatus(HttpStatus.OK)
-    public PublicationDto getPublication(@PathVariable String publicationId,
+    public HttpEntity<Resource<PublicationDto>> getPublication(@PathVariable String publicationId,
                                                    @RequestParam(value = GWASDepositionBackendConstants.PARAM_PMID,
                                                            required = false)
                                                            Boolean pmid,
@@ -52,44 +58,25 @@ public class PublicationsController {
             publication = publicationService.retrievePublication(publicationId, true);
         }
         log.info("Returning publication: {}", publication.getPmid());
-        PublicationDto publicationDto = PublicationDtoAssembler.assemble(publication);
-        publicationDto.add(linkTo(methodOn(PublicationsController.class).getPublication(publicationId, pmid, request)).withSelfRel());
-        return publicationDto;
+        return new ResponseEntity<>( publicationDtoAssembler.toResource(publication), HttpStatus.OK);
+
     }
+
+
+
+    @Autowired PublicationDtoAssembler publicationDtoAssembler;
+
 
     /**
      * GET /v1/publications
      */
     @GetMapping(produces = "application/hal+json")
-    @ResponseStatus(HttpStatus.OK)
-    public PublicationsResultDto getPublications(HttpServletRequest request,
-                                                 @RequestParam(
-                                                         value = GWASDepositionBackendConstants.PARAM_PAGE,
-                                                         required = false,
-                                                         defaultValue = "1")
-                                                         Integer page,
-                                                 @RequestParam(
-                                                         value = GWASDepositionBackendConstants.PARAM_NO_ITEMS,
-                                                         required = false,
-                                                         defaultValue = "10")
-                                                         Integer itemsPerPage,
-                                                 @RequestParam(
-                                                         value = GWASDepositionBackendConstants.PARAM_SORT,
-                                                         required = false)
-                                                         String sortType) {
-        log.info("Request to retrieve publications: {} - {} - {}", page, itemsPerPage, sortType);
-        FacetedSearchPublications facetedSearchPublications = publicationService.getPublications(page, itemsPerPage, sortType);
-        log.info("Returning {} publications.", facetedSearchPublications.getPublications().size());
-        List<PublicationDto> publicationDtos = new ArrayList<>();
-        for (Publication publication : facetedSearchPublications.getPublications()) {
-            Link selfLink = linkTo(PublicationsController.class).slash(publication.getId()).withSelfRel();
-            PublicationDto publicationDto = PublicationDtoAssembler.assemble(publication);
-            publicationDto.add(selfLink);
-            publicationDtos.add(publicationDto);
-        }
-        Link link = linkTo(PublicationsController.class).withSelfRel();
-        PublicationsResultDto publicationsResultDto = new PublicationsResultDto(FacetedMetadataDtoAssembler.assemble(facetedSearchPublications.getFacetedMetadata()), publicationDtos);
-        publicationsResultDto.add(link);
-        return publicationsResultDto;
+    public HttpEntity<PagedResources<PublicationDto>> getPublications(
+            @PageableDefault(size = 20, page = 0) Pageable pageable,
+            PagedResourcesAssembler assembler) {
+        log.info("Request to retrieve publications: {} - {} - {}", pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort().toString());
+        Page<Publication> facetedSearchPublications = publicationService.getPublications(pageable);
+        return new ResponseEntity<>( assembler.toResource(facetedSearchPublications, publicationDtoAssembler), HttpStatus.OK);
+
     }
 }

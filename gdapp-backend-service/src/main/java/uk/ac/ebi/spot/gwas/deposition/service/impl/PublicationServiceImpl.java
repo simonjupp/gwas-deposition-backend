@@ -69,4 +69,10 @@ public class PublicationServiceImpl implements PublicationService {
         log.info("Found {} total publications with this criteria.", totalItems);
         return new FacetedSearchPublications(facetedMetadata, publications);
     }
+
+    @Override
+    public Page<Publication> getPublications(Pageable page) {
+        log.info("Retrieving publications: {} - {} - {}", page.getPageNumber(), page.getPageSize(), page.getSort().toString());
+        return publicationRepository.findAll(page);
+    }
 }
