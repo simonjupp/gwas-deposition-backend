@@ -1,0 +1,422 @@
+{
+  "version": "1.0",
+  "study": {
+    "triggerRow": "Add your data below this line",
+    "studyTagColumnName": "study_tag",
+    "columns": [
+      {
+        "columnName": "study_tag",
+        "description": "A unique free-text label for each genome-wide association study in the publication",
+        "baseType": "string",
+        "columnHeading": "Study tag",
+        "required": true,
+        "default": true
+      },
+      {
+        "columnName": "genotyping_technology",
+        "description": "The method used to genotype variants in the discovery stage",
+        "baseType": "string",
+        "columnHeading": "Genotyping technology",
+        "required": true,
+        "default": true,
+        "example": "Targeted genotyping array",
+        "acceptedValues": [
+          "Genome-wide genotyping array",
+          "Targeted genotyping array",
+          "Exome genotyping array",
+          "Whole genome sequencing"
+        ]
+      },
+      {
+        "columnName": "array_manufacturer",
+        "description": "Manufacturer of the genotyping array used for the discovery stage",
+        "baseType": "string",
+        "columnHeading": "Array manufacturer",
+        "required": false,
+        "default": true,
+        "example": "Illumina"
+      },
+      {
+        "columnName": "array_information",
+        "description": "Additional information about the genotyping array",
+        "baseType": "string",
+        "columnHeading": "Array information",
+        "required": false,
+        "default": true,
+        "example": "immunochip"
+      },
+      {
+        "columnName": "imputation",
+        "description": "Were SNPs imputed for the discovery GWAS?",
+        "baseType": "boolean",
+        "columnHeading": "Imputation",
+        "required": true,
+        "default": true,
+        "example": "Yes/No",
+        "acceptedValues": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "columnName": "variant_count",
+        "description": "The number of variants analysed in the discovery stage (after QC)",
+        "baseType": "integer",
+        "columnHeading": "Variant count",
+        "required": true,
+        "default": true
+      },
+      {
+        "columnName": "statistical_model",
+        "description": "Details of the statistical model used to determine association significance",
+        "baseType": "string",
+        "columnHeading": "Statistical model",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "study_description",
+        "description": "Additional information about the study",
+        "baseType": "string",
+        "columnHeading": "Study description",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "trait",
+        "description": "The trait under investigation",
+        "baseType": "string",
+        "columnHeading": "Trait",
+        "required": true,
+        "default": true,
+        "example": "reticulocyte count"
+      },
+      {
+        "columnName": "efo_trait",
+        "description": "EFOs that best matching the \"trait\"",
+        "baseType": "string",
+        "columnHeading": "Mapped trait",
+        "required": false,
+        "default": false,
+        "example": "EFO_0007986"
+      },
+      {
+        "columnName": "background_trait",
+        "description": "Any background trait(s) shared by all individuals in the GWAS (e.g. in both cases and controls)",
+        "baseType": "string",
+        "columnHeading": "Background trait",
+        "required": false,
+        "default": false,
+        "example": "Nicotine dependence"
+      },
+      {
+        "columnName": "background_efo_trait",
+        "description": "EFOs that best match entered “background trait”",
+        "baseType": "string",
+        "columnHeading": "Mapped background trait",
+        "required": false,
+        "default": false,
+        "example": "EFO_0003768"
+      },
+      {
+        "columnName": "summary_statistics_file",
+        "description": "An identifier for the file containing full summary statistics for this study (if available)",
+        "baseType": "string",
+        "columnHeading": "Summary statistics file",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "cheksum",
+        "description": "md5 checksum of the summary stats file",
+        "baseType": "string",
+        "columnHeading": "md5 sum",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "summary_statistics_assembly",
+        "description": "Genome assembly of the summary statitistics",
+        "baseType": "string",
+        "columnHeading": "Summary statistics assembly",
+        "required": false,
+        "default": true,
+        "example": "GRCh38"
+      }
+    ]
+  },
+  "association": {
+    "triggerRow": "Add your data below this line",
+    "studyTagColumnName": "Study tag",
+    "columns": [
+      {
+        "columnName": "study_tag",
+        "description": "Linking associations with study. Must match the study tag in the study table",
+        "baseType": "string",
+        "columnHeading": "Study tag",
+        "required": true,
+        "default": true
+      },
+      {
+        "columnName": "haplotype_id",
+        "description": "For haplotype associations identifies identifies rows belonging together",
+        "baseType": "string",
+        "columnHeading": "Haplotype ID",
+        "required": false,
+        "default": false
+      },
+      {
+        "columnName": "variant_id",
+        "description": "rsID or other variant identifier",
+        "baseType": "string",
+        "columnHeading": "Variant ID",
+        "required": true,
+        "default": true
+      },
+      {
+        "columnName": "pvalue",
+        "description": "Reported p-value for variant in scientific notation",
+        "baseType": "string",
+        "columnHeading": "p-value",
+        "required": true,
+        "default": true,
+        "lowerBound": 0,
+        "upperBound": 0.00001
+      },
+      {
+        "columnName": "pvalue_text",
+        "description": "Free text to add extra information eg. conditional analysis",
+        "baseType": "string",
+        "columnHeading": "Extra information",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "proxy_variant",
+        "description": "rsID of a proxy SNP used in the replication stage only",
+        "baseType": "string",
+        "columnHeading": "Proxy variant",
+        "required": false,
+        "default": false
+      },
+      {
+        "columnName": "effect_allele",
+        "description": "The allele whose effects are being studied in relation to the phenotype",
+        "baseType": "string",
+        "columnHeading": "Effect allele",
+        "required": true,
+        "default": true,
+        "pattern": "^[actgACTG]*$"
+      },
+      {
+        "columnName": "other_allele",
+        "description": "The other allele at the locus",
+        "baseType": "string",
+        "columnHeading": "Other allele",
+        "required": false,
+        "default": true,
+        "pattern": "^[actgACTG]*$"
+      },
+      {
+        "columnName": "effect_allele_frequency",
+        "description": "frequency of the effect allele or haplotype in the control population",
+        "baseType": "number",
+        "columnHeading": "Effect allele frequency",
+        "required": true,
+        "default": true
+      },
+      {
+        "columnName": "odds_ratio",
+        "description": "Effect size of the effect allele or haplotype from a logistic regression for binary traits",
+        "baseType": "number",
+        "columnHeading": "Odds ratio",
+        "required": false,
+        "default": false
+      },
+      {
+        "columnName": "beta",
+        "description": "Effect size from a linear regression for continious traits",
+        "baseType": "number",
+        "columnHeading": "Beta",
+        "required": false,
+        "default": false
+      },
+      {
+        "columnName": "beta_unit",
+        "description": "Beta unit",
+        "baseType": "string",
+        "columnHeading": "Beta unit",
+        "required": false,
+        "default": false
+      },
+      {
+        "columnName": "ci_lower",
+        "description": "Lower limit of the confidence interval",
+        "baseType": "number",
+        "columnHeading": "CI lower",
+        "required": false,
+        "default": false
+      },
+      {
+        "columnName": "ci_upper",
+        "description": "Upper limit of the confidence interval",
+        "baseType": "number",
+        "columnHeading": "CI upper",
+        "required": false,
+        "default": false
+      },
+      {
+        "columnName": "standard_error",
+        "description": "standard error of the effect",
+        "baseType": "number",
+        "columnHeading": "Standard error",
+        "required": false,
+        "default": false
+      }
+    ]
+  },
+  "sample": {
+    "triggerRow": "Add your data below this line",
+    "studyTagColumnName": "Study tag",
+    "columns": [
+      {
+        "columnName": "study_tag",
+        "description": "A unique free-text label for each genome-wide association study in the publication",
+        "baseType": "string",
+        "columnHeading": "Study tag",
+        "required": true,
+        "default": true
+      },
+      {
+        "columnName": "stage",
+        "description": "Indication of the stage of the discovery process",
+        "baseType": "string",
+        "columnHeading": "Stage",
+        "required": true,
+        "default": true,
+        "acceptedValues": [
+          "discovery",
+          "replication"
+        ]
+      },
+      {
+        "columnName": "size",
+        "description": "Number of individuals in this group",
+        "baseType": "integer",
+        "columnHeading": "Number of individuals",
+        "required": true,
+        "default": true
+      },
+      {
+        "columnName": "cases",
+        "description": "Number of cases in this group",
+        "baseType": "integer",
+        "columnHeading": "Number of cases",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "controls",
+        "description": "Number of controls in this group",
+        "baseType": "integer",
+        "columnHeading": "Number of controls",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "sample_description",
+        "description": "Additional  relevant information required for the interpretation of results",
+        "baseType": "string",
+        "columnHeading": "Sample description",
+        "required": false,
+        "default": true,
+        "example": "sex (males/females), age (adults/children)"
+      },
+      {
+        "columnName": "ancestry_category",
+        "description": "Broad ancestry category that best describes the sample",
+        "baseType": "string",
+        "columnHeading": "Ancestry category",
+        "required": true,
+        "default": true,
+        "example": "European"
+      },
+      {
+        "columnName": "ancestry",
+        "description": "The most detailed ancestry descriptor",
+        "baseType": "string",
+        "columnHeading": "Ancestry",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "ancestry_description",
+        "description": "For founder or genetically isolated population, provide  description. If multiple founder/genetically isolated populations are included for the same ancestry category separate using \"|\"",
+        "baseType": "string",
+        "columnHeading": "Ancestry description",
+        "required": false,
+        "default": true
+      },
+      {
+        "columnName": "country_recruitement",
+        "description": "List of country/countries where samples were recruited",
+        "baseType": "string",
+        "columnHeading": "Country of recruitment",
+        "required": true,
+        "default": true,
+        "example": "Japan"
+      }
+    ]
+  },
+  "notes": {
+    "triggerRow": "Add your data below this line",
+    "studyTagColumnName": "Study tag",
+    "columns": [
+      {
+        "columnName": "study_tag",
+        "description": "A unique free-text label for each genome-wide association study in the publication",
+        "baseType": "string",
+        "columnHeading": "Study tag",
+        "required": true,
+        "default": false
+      },
+      {
+        "columnName": "note",
+        "description": null,
+        "baseType": "string",
+        "columnHeading": "Note",
+        "required": true,
+        "default": false
+      },
+      {
+        "columnName": "note_subject",
+        "description": null,
+        "baseType": "string",
+        "columnHeading": "Note subject",
+        "required": true,
+        "default": false,
+        "acceptedValues": [
+          "Preliminary review",
+          "Review/secondary extraction",
+          "Post-publishing review",
+          "Trait",
+          "Initial extraction",
+          "Other",
+          "Duplication TAG"
+        ]
+      },
+      {
+        "columnName": "status",
+        "description": null,
+        "baseType": "string",
+        "columnHeading": "Status",
+        "required": true,
+        "default": false,
+        "acceptedValues": [
+          "private",
+          "public"
+        ]
+      }
+    ]
+  }
+}

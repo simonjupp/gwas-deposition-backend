@@ -1,0 +1,5 @@
+validator:
+  error-messages: error_messages.txt
+  default-schema:
+    version: 1.0
+    file: schema_v1.json

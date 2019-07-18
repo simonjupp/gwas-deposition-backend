@@ -1,0 +1,5 @@
+ORPHAN_STUDY=Row '[(${row})]' makes references to a non-existing study tag
+MISSING_VALUE=Column '[(${column})]' in row '[(${row})]' lacks mandatory value
+INCORRECT_VALUE_RANGE-ACCEPTED_VALUES=Column '[(${column})]' in row '[(${row})]' contains incorrect value. Accepted values are: '[(${value})]'
+INCORRECT_VALUE_RANGE-PATTERN=Column '[(${column})]' in row '[(${row})]' contains incorrect value. Accepted values should respect the pattern: '[(${value})]'
+INCORRECT_VALUE_RANGE-RANGE=Column '[(${column})]' in row '[(${row})]' contains incorrect value. Accepted values should be in the range: '[(${value})]'
