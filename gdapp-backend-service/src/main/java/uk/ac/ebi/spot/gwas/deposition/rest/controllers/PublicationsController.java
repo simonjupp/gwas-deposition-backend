@@ -40,6 +40,8 @@ public class PublicationsController {
     @Autowired
     private PublicationService publicationService;
 
+    @Autowired PublicationDtoAssembler publicationDtoAssembler;
+
     /**
      * GET /v1/publications/{publicationId}?pmid=true | false
      */
@@ -61,11 +63,6 @@ public class PublicationsController {
         return new ResponseEntity<>( publicationDtoAssembler.toResource(publication), HttpStatus.OK);
 
     }
-
-
-
-    @Autowired PublicationDtoAssembler publicationDtoAssembler;
-
 
     /**
      * GET /v1/publications
